@@ -27,7 +27,7 @@ def allowed_file(filename):
 def flash_board(file_path, board, busdev):
 
     r = os.system(
-        f"openFPGALoader -f -b {board} {file_path} --busdev-num {busdev} > out.txt")
+        f"/home/julio/eda/oss-cad-suite/bin/openFPGALoader -f -b {board} {file_path} --busdev-num {busdev} > out.txt")
 
     print(
         f"openFPGALoader -f -b {board} {file_path} -busdev-num {busdev} > out.txt")
@@ -50,7 +50,7 @@ def flash_board(file_path, board, busdev):
 @app.route("/flash_9k", methods=["POST"])
 def flash_route_9k():
     board = "tangnano9k"
-    busdev = "01:018"
+    busdev = "01:001"
 
     if not "file" in request.files:
         return jsonify({"success": False, "error": "Arquivo não enviado"}), 400
