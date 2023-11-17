@@ -24,12 +24,13 @@ def allowed_file(filename):
     return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
-def flash_board(file_path, board, port):
+def flash_board(file_path, board, busdev):
 
     r = os.system(
-        f"openFPGALoader -f -b {board} {file_path} -d {port} > out.txt")
+        f"openFPGALoader -f -b {board} {file_path} --busdev-num {busdev} > out.txt")
 
-    print(f"openFPGALoader -f -b {board} {file_path} -d {port} > out.txt")
+    print(
+        f"openFPGALoader -f -b {board} {file_path} -busdev-num {busdev} > out.txt")
 
     data = open("out.txt", "r")
 
@@ -49,7 +50,7 @@ def flash_board(file_path, board, port):
 @app.route("/flash_9k", methods=["POST"])
 def flash_route_9k():
     board = "tangnano9k"
-    port = "/dev/ttyUSB2"
+    busdev = "01:018"
 
     if not "file" in request.files:
         return jsonify({"success": False, "error": "Arquivo não enviado"}), 400
@@ -72,7 +73,7 @@ def flash_route_9k():
     file_path = os.path.join(app.config["UPLOAD_FOLDER"], filename)
     file.save(file_path)
 
-    r, content = flash_board(file_path, board, port)
+    r, content = flash_board(file_path, board, busdev)
 
     return jsonify({"success": True, "filename": filename, "message": content, "execution_code": r}), 201
 
@@ -80,7 +81,7 @@ def flash_route_9k():
 @app.route("/flash_20k", methods=["POST"])
 def flash_route_20k():
     board = "tangnano20k"
-    port = "/dev/ttyUSB0"
+    busdev = "01:008"
 
     if not "file" in request.files:
         return jsonify({"success": False, "error": "Arquivo não enviado"}), 400
@@ -103,7 +104,7 @@ def flash_route_20k():
     file_path = os.path.join(app.config["UPLOAD_FOLDER"], filename)
     file.save(file_path)
 
-    r, content = flash_board(file_path, board, port)
+    r, content = flash_board(file_path, board, busdev)
 
     return jsonify({"success": True, "filename": filename, "message": content, "execution_code": r}), 201
 
