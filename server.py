@@ -17,7 +17,7 @@ ALLOWED_EXTENSIONS = {"fs", "bin", "elf"}
 
 app = Flask(__name__)
 
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
 
 def allowed_file(filename):
@@ -25,12 +25,11 @@ def allowed_file(filename):
 
 
 def flash_board(file_path, board, busdev):
-
     r = os.system(
-        f"/home/julio/eda/oss-cad-suite/bin/openFPGALoader -f -b {board} {file_path} --busdev-num {busdev} > out.txt")
+        f"/home/julio/eda/oss-cad-suite/bin/openFPGALoader -f -b {board} {file_path} --busdev-num {busdev} > out.txt"
+    )
 
-    print(
-        f"openFPGALoader -f -b {board} {file_path} -busdev-num {busdev} > out.txt")
+    print(f"openFPGALoader -f -b {board} {file_path} -busdev-num {busdev} > out.txt")
 
     data = open("out.txt", "r")
 
@@ -76,9 +75,29 @@ def flash_route_9k():
     r, content = flash_board(file_path, board, busdev)
 
     if r != 0:
-        return jsonify({"success": False, "filename": filename, "message": content, "execution_code": r}), 400
+        return (
+            jsonify(
+                {
+                    "success": False,
+                    "filename": filename,
+                    "message": content,
+                    "execution_code": r,
+                }
+            ),
+            400,
+        )
     else:
-        return jsonify({"success": False, "filename": filename, "message": content, "execution_code": r}), 201
+        return (
+            jsonify(
+                {
+                    "success": False,
+                    "filename": filename,
+                    "message": content,
+                    "execution_code": r,
+                }
+            ),
+            201,
+        )
 
 
 @app.route("/flash_20k", methods=["POST"])
@@ -110,9 +129,29 @@ def flash_route_20k():
     r, content = flash_board(file_path, board, busdev)
 
     if r != 0:
-        return jsonify({"success": False, "filename": filename, "message": content, "execution_code": r}), 400
+        return (
+            jsonify(
+                {
+                    "success": False,
+                    "filename": filename,
+                    "message": content,
+                    "execution_code": r,
+                }
+            ),
+            400,
+        )
     else:
-        return jsonify({"success": False, "filename": filename, "message": content, "execution_code": r}), 201
+        return (
+            jsonify(
+                {
+                    "success": False,
+                    "filename": filename,
+                    "message": content,
+                    "execution_code": r,
+                }
+            ),
+            201,
+        )
 
 
 if __name__ == "__main__":

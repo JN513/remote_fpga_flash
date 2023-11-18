@@ -57,8 +57,7 @@ else:
 
 print("Log: iniciado request ao servidor.")
 
-r = requests.post(f"{url}{board}",
-                  files={"file": file})
+r = requests.post(f"{url}{board}", files={"file": file})
 
 print("Log: request concluida.")
 
