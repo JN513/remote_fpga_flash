@@ -47,7 +47,7 @@ if not file:
 
     sys.exit()
 
-url = "http://10.68.10.71:8000/flash_"
+url = "http://127.0.0.1:8000/flash_"
 board = ""
 
 if args.board == "tangnano20k":
